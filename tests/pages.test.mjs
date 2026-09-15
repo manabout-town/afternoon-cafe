@@ -26,3 +26,14 @@ test('after: 10/10', async () => {
   const r = await checkPage(browser, 'after/index.html');
   assert.equal(r.score, 10, JSON.stringify(r.results, null, 1));
 });
+
+test('quickstart: 12줄만으로 6개 통과', async () => {
+  const r = await checkPage(browser, 'quickstart/index.html');
+  assert.deepEqual(passedIds(r), ['background', 'body-size', 'line-height', 'letter-spacing', 'font', 'reading-width'],
+    JSON.stringify(r.results, null, 1));
+});
+
+test('tailwind/after: 10/10', async () => {
+  const r = await checkPage(browser, 'tailwind/after.html', { waitUntil: 'networkidle' });
+  assert.equal(r.score, 10, JSON.stringify(r.results, null, 1));
+});

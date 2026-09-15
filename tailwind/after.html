@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오후세시 커피 — Tailwind판</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="m-0 bg-[#F6F5F2] font-['Pretendard_Variable',Pretendard,-apple-system,sans-serif] text-[14px] leading-[1.6] tracking-[-0.011em] text-[rgba(26,24,20,.92)]">
+<div class="mx-auto max-w-[1244px] px-6">
+  <header class="flex items-center justify-between py-5">
+    <a class="font-bold no-underline" href="#">오후세시 커피</a>
+    <a class="inline-block rounded-md px-6 py-3.5 font-semibold no-underline shadow-[inset_0_0_0_1px_rgba(26,24,20,.2)] transition-[background-color,transform] duration-[160ms] ease-[cubic-bezier(0,0,.2,1)] hover:-translate-y-px" href="#visit">예약하기</a>
+  </header>
+
+  <section class="pb-[72px] pt-[96px]" id="hero">
+    <span class="mb-3 inline-block font-['IBM_Plex_Mono',ui-monospace,monospace] text-[11px] uppercase tracking-[0.05em]">SINCE 2019 · MANGWON</span>
+    <h1 class="mb-4 mt-0 text-[clamp(36px,6vw,56px)] font-extrabold leading-[1.1] tracking-[-0.035em]">오후 세 시, 햇빛이 테이블 끝까지 들어오는 곳</h1>
+    <p class="mb-3 max-w-[36em] text-[rgba(26,24,20,.68)]">망원동 골목 끝 작은 로스터리입니다. 화요일과 금요일에 원두를 볶고, 볶은 지 사흘 지난 원두만 씁니다.</p>
+    <div class="mt-8 flex flex-wrap gap-2">
+      <a class="inline-block rounded-md bg-[rgb(26,24,20)] px-6 py-3.5 font-semibold text-[#F6F5F2] no-underline transition-[background-color,transform] duration-[160ms] ease-[cubic-bezier(0,0,.2,1)] hover:-translate-y-px" href="#menu">메뉴 보기</a>
+      <a class="inline-block rounded-md px-6 py-3.5 font-semibold no-underline shadow-[inset_0_0_0_1px_rgba(26,24,20,.2)] transition-[background-color,transform] duration-[160ms] ease-[cubic-bezier(0,0,.2,1)] hover:-translate-y-px" href="#visit">오시는 길</a>
+    </div>
+  </section>
+
+  <section class="py-[72px]" id="about">
+    <h2 class="mb-6 mt-0 text-[clamp(28px,4vw,36px)] font-bold leading-[1.2] tracking-[-0.025em]">우리의 이야기</h2>
+    <p class="mb-3 max-w-[36em] text-[rgba(26,24,20,.68)]">오후세시 커피는 2019년 망원동 골목에서 작은 로스터리로 시작했습니다. 매주 화요일과 금요일에 소량으로 원두를 볶고, 볶은 지 사흘이 지난 원두만 에스프레소에 씁니다. 창가 자리 여섯 개와 긴 원목 테이블 하나가 전부인 작은 가게지만, 오후 세 시가 되면 햇빛이 테이블 끝까지 들어옵니다.</p>
+    <p class="mb-3 max-w-[36em] text-[rgba(26,24,20,.68)]">창가 자리는 예약 없이 먼저 오시는 순서대로 앉으실 수 있습니다.</p>
+  </section>
+
+  <section class="py-[72px]" id="menu">
+    <h2 class="mb-6 mt-0 text-[clamp(28px,4vw,36px)] font-bold leading-[1.2] tracking-[-0.025em]">시그니처 메뉴</h2>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(240px,1fr))] gap-3">
+      <article class="menu-card flex flex-col gap-1.5 overflow-hidden rounded-lg border border-[rgba(0,0,0,.08)] bg-[#FBFAF8] p-6 transition-[transform] duration-[480ms] ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5">
+        <img class="aspect-[4/3] w-full rounded bg-[#e9e5df] object-cover" src="../images/menu-1.jpg" alt="우유 크림을 얹은 아이스 라떼">
+        <h3 class="m-0 text-[16px] leading-[1.35]">오후세시 라떼</h3>
+        <p class="m-0 max-w-[36em] text-[rgba(26,24,20,.68)]">고소한 원두에 우유 크림을 얹은 가게 대표 메뉴입니다.</p>
+        <span class="font-['IBM_Plex_Mono',ui-monospace,monospace]">6,000원</span>
+        <span class="text-[12px] text-[rgba(26,24,20,.45)]">매일 한정 40잔</span>
+      </article>
+      <article class="menu-card flex flex-col gap-1.5 overflow-hidden rounded-lg border border-[rgba(0,0,0,.08)] bg-[#FBFAF8] p-6 transition-[transform] duration-[480ms] ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5">
+        <img class="aspect-[4/3] w-full rounded bg-[#e9e5df] object-cover" src="../images/menu-2.jpg" alt="드리퍼로 내리는 핸드드립 커피">
+        <h3 class="m-0 text-[16px] leading-[1.35]">오늘의 핸드드립</h3>
+        <p class="m-0 max-w-[36em] text-[rgba(26,24,20,.68)]">그날 볶은 원두 중 하나를 골라 천천히 내려 드립니다.</p>
+        <span class="font-['IBM_Plex_Mono',ui-monospace,monospace]">7,000원</span>
+        <span class="text-[12px] text-[rgba(26,24,20,.45)]">원두 3종 중 선택</span>
+      </article>
+      <article class="menu-card flex flex-col gap-1.5 overflow-hidden rounded-lg border border-[rgba(0,0,0,.08)] bg-[#FBFAF8] p-6 transition-[transform] duration-[480ms] ease-[cubic-bezier(.16,1,.3,1)] hover:-translate-y-0.5">
+        <img class="aspect-[4/3] w-full rounded bg-[#e9e5df] object-cover" src="../images/menu-3.jpg" alt="무화과를 넣은 휘낭시에">
+        <h3 class="m-0 text-[16px] leading-[1.35]">무화과 휘낭시에</h3>
+        <p class="m-0 max-w-[36em] text-[rgba(26,24,20,.68)]">버터 향이 진한 구움과자에 무화과 조림을 넣었습니다.</p>
+        <span class="font-['IBM_Plex_Mono',ui-monospace,monospace]">3,800원</span>
+        <span class="text-[12px] text-[rgba(26,24,20,.45)]">오후 2시에 오븐에서 나옵니다</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="py-[72px]" id="visit">
+    <h2 class="mb-6 mt-0 text-[clamp(28px,4vw,36px)] font-bold leading-[1.2] tracking-[-0.025em]">오시는 길</h2>
+    <div class="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-8">
+      <div class="flex aspect-[16/10] items-center justify-center rounded-lg bg-[#e9e5df]">지도 영역</div>
+      <div>
+        <h3 class="m-0 text-[16px] leading-[1.35]">서울 마포구 망원동 가상로 3길 15</h3>
+        <p class="mb-3 text-[12px] text-[rgba(26,24,20,.45)]">영업 11:00–22:00 · 월요일 휴무</p>
+        <p class="mb-3 max-w-[36em] text-[rgba(26,24,20,.68)]">망원역 2번 출구에서 걸어서 8분. 골목 끝 초록 차양이 보이면 도착입니다.</p>
+        <a class="inline-block rounded-md bg-[rgb(26,24,20)] px-6 py-3.5 font-semibold text-[#F6F5F2] no-underline transition-[background-color,transform] duration-[160ms] ease-[cubic-bezier(0,0,.2,1)] hover:-translate-y-px" href="#">예약하기</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="py-12 text-[rgba(26,24,20,.45)]">
+    <p class="mb-3">© 2026 오후세시 커피. All rights reserved.</p>
+    <p class="mb-3">이 페이지는 전자책 실습용 가상 가게입니다.</p>
+  </footer>
+</div>
+</body>
+</html>

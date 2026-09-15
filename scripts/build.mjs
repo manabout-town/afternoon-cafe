@@ -23,3 +23,6 @@ STEPS.forEach((step, i) => {
 let after = html;
 for (const [from, to] of AFTER_COPY) after = replaceOnce(after, from, to);
 write('after/index.html', after);
+
+const snippet = read('quickstart/snippet.html');
+write('quickstart/index.html', replaceOnce(read('before/index.html'), '</head>', `${snippet.trim()}\n</head>`));
