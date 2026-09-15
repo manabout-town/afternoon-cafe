@@ -2,3 +2,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap");
 :root{--bg:#F4F1EA;--surface:#F8F6F1;--ink:38,32,26;--on-ink:#F4F1EA;--r-sm:2px;--r-md:2px;--r-lg:2px;--font-display:"Noto Serif KR",serif}
 h1,h2{font-weight:700}
+/* 이 배경에서는 .60이 4.5:1 미만이라 .65로 보정 */
+.section .meta,footer{color:rgba(var(--ink),.65)}
