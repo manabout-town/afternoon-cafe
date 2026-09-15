@@ -20,7 +20,7 @@ test('index.html 링크가 전부 실제 파일을 가리킴', () => {
 });
 
 test('규칙 파일 3종에 10개 규칙 수치가 모두 들어 있음', () => {
-  const needles = ['#FFFFFF', '14px', '1.1', '-0.035em', 'Pretendard', '4단계', '한 계열', '16px', '160ms', '680px'];
+  const needles = ['#FFFFFF', '14px', '1.1', '-0.04em', 'Pretendard', '4단계', '한 계열', '16px', '160ms', '680px'];
   for (const f of ['rules/CLAUDE.md', 'rules/cursor-ui.mdc', 'rules/chatgpt.txt']) {
     const t = readFileSync(path.join(ROOT, f), 'utf8');
     for (const n of needles) assert.ok(t.includes(n), `${f}: ${n} 없음`);

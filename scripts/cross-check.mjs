@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const require = createRequire(import.meta.url);
 const { chromium } = require(path.join(execSync('npm root -g').toString().trim(), 'playwright'));
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const SITES = ['https://linear.app', 'https://oriorai.com', 'https://harryjatkins.com', 'https://augen.pro', 'https://shopify.design'];
+const SITES = ['https://linear.app', 'https://oriorai.com', 'https://harryjatkins.com', 'https://augen.pro', 'https://shopify.design', 'https://interfere.com', 'https://becaneparis.com', 'https://dirtverse.co', 'https://podium.global'];
 
 const browser = await chromium.launch();
 const rows = [];

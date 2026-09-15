@@ -1,9 +1,11 @@
 # AI 티 검사기 — 실제 사이트 교차 확인
 
-측정일 2026-09-15 (1차), 규칙 수정 후 재측정 2026-09-15 (2차, fix round 1).
+측정일 2026-09-15 (1차), 규칙 수정 후 재측정 2026-09-15 (2차, fix round 1),
+대상 확장 재측정 2026-09-15 (3차, 규칙 변경 없음).
 `scripts/cross-check.mjs`로 `tools/ai-slop-check.js`의 `analyze()`를 실제 라이브 사이트
-DOM에 그대로 돌려 검사기 자체를 점검했다. 대상은 실측 베이스라인
-(`~/.claude/design-refs/web-craft-baseline.md`) 9곳 중 5곳.
+DOM에 그대로 돌려 검사기 자체를 점검했다(Chromium, 1440×900). 대상은 작성자 실측 노트(2026-08)의
+9곳. 1·2차는 그중 5곳, 3차는 avara.xyz(자동 접속 시 403)를 뺀 나머지 9곳 전부를 돌렸다.
+최종 결과는 맨 아래 "3차 결과".
 
 ## 1차 결과 (규칙 완화 전)
 
@@ -143,6 +145,71 @@ node --test "tests/*.test.mjs"
   augen.pro만 전 구간이 기본값이다 — 규칙 문제가 아니라 이 사이트가 실제로 모션을
   커스터마이징하지 않은 것.
 
+## 3차 결과 (대상 확장, 2026-09-15, 규칙·기준값 변경 없음)
+
+2차까지 빠져 있던 interfere.com, becaneparis.com, dirtverse.co, podium.global을 `SITES`에
+추가해 같은 스크립트로 한 번에 다시 돌렸다. avara.xyz는 자동 접속에서 403이 나와 계속 제외.
+
+| 사이트 | 점수 | 걸린 항목 |
+|---|---|---|
+| https://linear.app | 9/10 | radius(타이트 + 소프트 + 중간) |
+| https://oriorai.com | 9/10 | body-size(16px) |
+| https://harryjatkins.com | 9/10 | background(rgb(255, 255, 255)) |
+| https://augen.pro | 6/10 | body-size(16px), letter-spacing(0.008 ~ -0.020em), radius(중간 + 소프트 + 타이트), motion(기본 ease 22/22곳 (100%)) |
+| https://shopify.design | 측정 실패 | page.goto: Timeout 45000ms exceeded. |
+| https://interfere.com | 5/10 | background(rgb(255, 255, 255)), line-height(최대 1.29배), letter-spacing(-0.010 ~ -0.051em), radius(타이트 + 소프트 + 중간), reading-width(가장 넓은 문단 1054px) |
+| https://becaneparis.com | 7/10 | body-size(8px), letter-spacing(0.000 ~ 0.000em), motion(기본 ease 2/2곳 (100%)) |
+| https://dirtverse.co | 6/10 | background(rgb(255, 255, 255)), body-size(20px), letter-spacing(0.000 ~ 0.000em), radius(타이트 + 중간) |
+| https://podium.global | 7/10 | background(rgb(0, 0, 0)), body-size(16px), letter-spacing(0.000 ~ 0.000em) |
+
+**요약**: 측정 성공 8곳 — 9점 3곳(linear, oriorai, harryjatkins), 7점 2곳(becaneparis,
+podium), 6점 2곳(augen, dirtverse), 5점 1곳(interfere). 10점은 없다. shopify.design은 세
+차례 모두 45초 안에 열리지 않아 제외. 앞의 4곳은 2차와 점수·걸린 항목이 같다.
+
+### 새로 넣은 4곳 판정 (2026-09-15 측정값, 추측 없음)
+
+같은 조건(1440×900)에서 `getComputedStyle`로 세부 값을 따로 뽑아 확인했다.
+
+- **interfere.com / background(순백)** — 사이트가 바뀜 → 규칙 유지. 2026-08 노트는 다크
+  `oklch(0.15 0 0)`였는데, 이번에는 `<body>`·`<html>` 배경이 모두 `rgb(255,255,255)`로 나왔다.
+- **interfere.com / line-height(1.29배)** — 사이트가 규칙과 다름 → 유지. 28px 소제목이
+  `line-height: 36px`(1.29배). 56~59px 큰 제목은 1.0배로 통과 범위.
+- **interfere.com / letter-spacing(-0.051em)** — **검사기 한계(원인 확인)** → 이번 판에서는 수정 안 함.
+  Chrome이 이 사이트의 큰 제목 자간을 `-2%`, `-3%`처럼 퍼센트로 돌려주는데, 검사기는
+  `parseFloat`로 숫자만 떼어 px로 계산한다. `-3% ÷ 59px`가 `-0.051em`으로 잡혀 범위를 벗어났지만,
+  실제 값은 `-0.03em`으로 권장 범위 안이다. 퍼센트 자간 처리는 다음 개정 후보로 남긴다.
+- **interfere.com / radius(3계열)** — linear.app과 같은 사유(측정 범위) → 유지. 타이트 218개,
+  소프트 14개, 중간 14개.
+- **interfere.com / reading-width(1054px)** — 사이트가 규칙과 다름 → 유지. 가장 넓은 문단은
+  알림처럼 보이는 문장("Interfere detected a surge in failed pas…")으로 폭 1054px.
+- **becaneparis.com / body-size(8px)** — 사이트가 규칙과 다름 → 유지. 20자 이상인 글자 덩어리가
+  8px 21자 하나뿐이라 그 값이 최빈값이 됐다. 2026-08 노트(8px)와 같다.
+- **becaneparis.com / letter-spacing(0)** — 사이트가 규칙과 다름 → 유지. 30px 제목 2개가
+  `letter-spacing: normal`.
+- **becaneparis.com / motion(2/2 ease)** — 사이트가 규칙과 다름 → 유지. 전환 2건이 모두
+  `transform | ease`. 표본이 2건뿐이라는 점은 함께 적는다.
+- **dirtverse.co / background(순백)** — 사이트가 바뀜 → 유지. 2026-08 노트는 `#F2F2EF`였는데,
+  이번에는 `<body>`·`<html>` 배경이 모두 투명(`rgba(0,0,0,0)`)이라 브라우저 기본값인 흰색으로 판정됐다.
+- **dirtverse.co / body-size(20px)** — 사이트가 바뀜 → 유지. 문자수 가중 20px 216자, 10px 179자,
+  15px 120자. 2026-08 노트는 13px.
+- **dirtverse.co / letter-spacing(0)** — 사이트가 규칙과 다름 → 유지. 40px 제목이 `normal`.
+- **dirtverse.co / radius(타이트+중간)** — 사이트가 규칙과 다름 → 유지. 타이트 49개, 중간 1개.
+- **podium.global / background(순검정)** — 규칙이 정확히 걸어냄 → 유지. 2026-08 노트에도
+  `rgb(0,0,0)`으로 적혀 있고, 책은 "순검정은 강한 인상을 노린 표현형 사이트의 선택"으로 설명한다.
+- **podium.global / body-size(16px)** — 사이트가 바뀜 → 유지. 16px 360자, 12px 92자. 2026-08 노트는 12px.
+- **podium.global / letter-spacing(0)** — 사이트가 규칙과 다름 → 유지. 62px 제목이 `normal`.
+
+"사이트가 바뀜"은 2026-08 노트와 이번 값이 다르다는 사실까지만 뜻한다. 그사이 개편인지
+재는 방식 차이인지는 확인하지 못했다.
+
+### 2026-08 노트와 달라진 점 (실측 유통기한)
+
+- **본문 크기**: 8월 노트에서는 9곳 모두 16px 미만이었다. 9월 측정에서는 성공한 8곳 중
+  oriorai.com(16px), augen.pro(16px), podium.global(16px), dirtverse.co(20px) 4곳이 16px 이상으로 나왔다.
+- **배경**: 8월 노트의 라이트 모드 body 배경 중 순백은 0곳이었다(harryjatkins.com의 `#F7F7F7`은
+  표면 색이라 제외). 9월에는 dirtverse.co가 흰색으로 판정됐고, 다크였던 interfere.com도 흰 배경으로 나왔다.
+- 책에서는 8월 수치를 "(2026-08 기록)"으로 날짜를 붙여 인용하고, 이 변화는 PART 3의 3.1에 적는다.
+
 ## 결론
 
 - **완화한 규칙**: text-color(알파 무시 + 그룹핑 + 3% 임계값), motion(비율 기준 25%,
@@ -156,3 +223,6 @@ node --test "tests/*.test.mjs"
   사이트가 있다는 걸 보여주는 좋은 예. (2) 베이스라인(2026-08)과 이번 재측정(2026-09)
   사이에 oriorai.com·augen.pro의 본문 크기가 14px→16px로 달라졌다 — 라이브 사이트는
   계속 바뀌므로 "실측"도 유통기한이 있다는 한계로 밝힌다.
+- **3차(대상 확장)**: 기준값은 그대로 두고 8곳을 쟀다. 새로 걸린 항목은 대부분 사이트 쪽 선택이거나
+  2026-08 이후 달라진 값이다. 검사기 쪽 문제로 확인된 것은 퍼센트 자간(interfere.com) 1건이며, 이번 판에서는
+  기록만 하고 고치지 않았다.
