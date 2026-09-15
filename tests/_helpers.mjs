@@ -14,3 +14,13 @@ export async function openPage(browser, relPath, { width = 1440, waitUntil = 'do
   await page.goto('file://' + path.join(ROOT, relPath), { waitUntil });
   return page;
 }
+
+export async function checkPage(browser, relPath, opts = {}) {
+  const page = await openPage(browser, relPath, opts);
+  await page.addScriptTag({ path: path.join(ROOT, 'tools/ai-slop-check.js') });
+  const report = await page.evaluate(() => window.__aiSlop);
+  await page.close();
+  return report;
+}
+
+export const passedIds = r => r.results.filter(x => x.pass === true).map(x => x.id);
