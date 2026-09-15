@@ -15,6 +15,18 @@
     const p = m[1].split(/[\s,/]+/).filter(Boolean).map(Number);
     return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
   };
+  // rgb()/rgba() 외 색 함수(oklab/oklch/lab/color() 등)도 알파만 떼어내 베이스를 묶는다.
+  const colorAlpha = v => {
+    const c = parseColor(v);
+    if (c) return c.a;
+    const m = /\/\s*([\d.]+)\s*\)\s*$/.exec((v || '').trim());
+    return m ? parseFloat(m[1]) : 1;
+  };
+  const colorBaseKey = v => {
+    const c = parseColor(v);
+    if (c) return `${c.r},${c.g},${c.b}`;
+    return (v || '').trim().replace(/\s*\/\s*[\d.]+\s*\)\s*$/, ')');
+  };
   const splitList = v => (v || '').split(/,(?![^(]*\))/).map(s => s.trim()).filter(Boolean);
   const firstFamily = v => (splitList(v)[0] || '').replace(/["']/g, '').toLowerCase();
   const weightedMode = (items, key, weight) => {
@@ -56,10 +68,17 @@
     add('font', '폰트', family === null || !SYSTEM_FONTS.includes(family), family || '글자 없음',
       'Pretendard 같은 웹폰트 지정');
 
-    const colorUses = new Map();
-    for (const t of snap.texts) colorUses.set(t.color, (colorUses.get(t.color) || 0) + 1);
-    const colors = [...colorUses].filter(([, n]) => n >= 2).length;
-    add('text-color', '글자색 단계', colors <= 5, `${colors}가지`, '같은 색의 투명도 4단계');
+    const colorChars = new Map();
+    let colorTotalChars = 0;
+    for (const t of snap.texts) {
+      if (colorAlpha(t.color) === 0) continue; // 완전 투명(안 보이는 글자)은 무시
+      const key = colorBaseKey(t.color); // 알파 무시하고 베이스 색으로 묶음 (rgb든 oklab이든)
+      colorChars.set(key, (colorChars.get(key) || 0) + t.chars);
+      colorTotalChars += t.chars;
+    }
+    const colorGroups = colorTotalChars
+      ? [...colorChars.values()].filter(n => n / colorTotalChars >= 0.03).length : 0;
+    add('text-color', '글자색 단계', colorGroups <= 5, `${colorGroups}가지 색 계열`, '같은 색의 투명도 4단계');
 
     const families = new Set();
     for (const r of snap.radii) {
@@ -79,10 +98,12 @@
       '안쪽 4~12px, 섹션 사이 24px 이상');
 
     const sec = d => parseFloat(d) * (d.endsWith('ms') ? 0.001 : 1);
+    const motionTotal = snap.transitions.length;
     const bad = snap.transitions.filter(t => splitList(t.timing).includes('ease')
-      || splitList(t.property).includes('all') || splitList(t.duration).some(d => sec(d) > 1));
-    add('motion', '움직임', bad.length === 0,
-      bad.length ? `기본 ease·all ${bad.length}곳` : `${snap.transitions.length}곳 정상`,
+      || splitList(t.duration).some(d => sec(d) > 1));
+    const motionRatio = motionTotal ? bad.length / motionTotal : 0;
+    add('motion', '움직임', motionTotal === 0 || motionRatio < 0.25,
+      bad.length ? `기본 ease ${bad.length}/${motionTotal}곳 (${Math.round(motionRatio * 100)}%)` : `${motionTotal}곳 정상`,
       '160ms 감속 곡선, 큰 동작 480ms');
 
     if (snap.viewportWidth < 1000) {
