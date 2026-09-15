@@ -26,3 +26,8 @@ write('after/index.html', after);
 
 const snippet = read('quickstart/snippet.html');
 write('quickstart/index.html', replaceOnce(read('before/index.html'), '</head>', `${snippet.trim()}\n</head>`));
+
+for (const name of ['minimal', 'editorial', 'dark', 'soft']) {
+  write(`styles/${name}/index.html`,
+    deeper(replaceOnce(after, '</head>', `<link rel="stylesheet" href="../${name}.css">\n</head>`)));
+}

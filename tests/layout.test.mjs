@@ -4,7 +4,8 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { chromium, openPage, ROOT } from './_helpers.mjs';
 
-export const PAGES = ['before/index.html', 'after/index.html', 'tailwind/after.html'];
+export const PAGES = ['before/index.html', 'after/index.html', 'tailwind/after.html',
+  'styles/minimal/index.html', 'styles/editorial/index.html', 'styles/dark/index.html', 'styles/soft/index.html'];
 let browser;
 before(async () => { browser = await chromium.launch(); });
 after(async () => { await browser.close(); });

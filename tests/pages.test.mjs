@@ -37,3 +37,10 @@ test('tailwind/after: 10/10', async () => {
   const r = await checkPage(browser, 'tailwind/after.html', { waitUntil: 'networkidle' });
   assert.equal(r.score, 10, JSON.stringify(r.results, null, 1));
 });
+
+for (const name of ['minimal', 'editorial', 'dark', 'soft']) {
+  test(`styles/${name}: 10/10`, async () => {
+    const r = await checkPage(browser, `styles/${name}/index.html`);
+    assert.equal(r.score, 10, JSON.stringify(r.results, null, 1));
+  });
+}

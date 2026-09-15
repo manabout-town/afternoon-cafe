@@ -1,0 +1,4 @@
+/* 다크 — 개발·크리에이티브·바/나이트. 어두운 배경 + 밝은 먹 */
+:root{--bg:#0B0C0E;--surface:#131417;--ink:236,237,238;--on-ink:#0B0C0E;--r-sm:4px;--r-md:6px;--r-lg:8px}
+.menu-card{border-color:rgba(255,255,255,.08)}
+.map,.menu-card img{background:#1A1B1F}

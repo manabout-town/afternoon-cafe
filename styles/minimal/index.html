@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오후세시 커피</title>
+<!-- [5 폰트 링크] -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- [/5 폰트 링크] -->
+<style>
+/* ── 기본 배치: 이 책에서는 건드리지 않아요 ── */
+*{box-sizing:border-box}
+body{margin:0}
+a{color:inherit}
+img{max-width:100%;display:block}
+.container{margin:0 auto;padding:0 24px}
+header{display:flex;justify-content:space-between;align-items:center;padding:20px 0}
+.logo{font-weight:700;text-decoration:none}
+.hero{padding:96px 0 72px}
+.hero-actions{display:flex;flex-wrap:wrap;margin-top:32px}
+.btn{display:inline-block;padding:14px 24px;text-decoration:none;font-weight:600;border:0;cursor:pointer}
+.section{padding:72px 0}
+.menu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.menu-card{padding:24px;display:flex;flex-direction:column;border:1px solid rgba(0,0,0,.08);overflow:hidden}
+.menu-card img{aspect-ratio:4/3;object-fit:cover;width:100%;background:#e9e5df}
+.info{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.map{aspect-ratio:16/10;background:#e9e5df;display:flex;align-items:center;justify-content:center}
+footer{padding:48px 0}
+h1{font-size:clamp(36px,6vw,56px);margin:0 0 16px;font-weight:800}
+h2{font-size:clamp(28px,4vw,36px);margin:0 0 24px;font-weight:700}
+h3{font-size:18px;margin:0}
+p{margin:0 0 12px}
+.label{display:inline-block;margin-bottom:12px}
+
+/* [1 배경] */
+:root{--bg:#F6F5F2;--surface:#FBFAF8}
+body{background:var(--bg)}
+.menu-card{background:var(--surface)}
+/* [/1] */
+
+/* [2 글자 크기] */
+body{font-size:14px}
+.meta{font-size:12px}
+h3{font-size:16px}
+/* [/2] */
+
+/* [3 줄 간격] */
+body{line-height:1.6}
+h1{line-height:1.1}
+h2{line-height:1.2}
+h3{line-height:1.35}
+/* [/3] */
+
+/* [4 자간] */
+body{letter-spacing:-0.011em}
+h1{letter-spacing:-0.035em}
+h2{letter-spacing:-0.025em}
+.label{font-size:11px;letter-spacing:0.05em;text-transform:uppercase}
+/* [/4] */
+
+/* [5 폰트] */
+:root{--font-body:"Pretendard Variable",Pretendard,-apple-system,sans-serif;--font-display:var(--font-body);--font-mono:"IBM Plex Mono",ui-monospace,monospace}
+body{font-family:var(--font-body)}
+h1,h2{font-family:var(--font-display)}
+.price,.label{font-family:var(--font-mono)}
+/* [/5] */
+
+/* [6 글자색] */
+:root{--ink:26,24,20;--on-ink:#F6F5F2}
+body,h1,h2{color:rgba(var(--ink),.92)}
+.hero p,.section p{color:rgba(var(--ink),.68)}
+.price{color:rgba(var(--ink),.92)}
+.section .meta,footer{color:rgba(var(--ink),.45)}
+.btn-primary{background:rgb(var(--ink));color:var(--on-ink)}
+.btn-ghost{background:transparent;color:rgba(var(--ink),.92);box-shadow:inset 0 0 0 1px rgba(var(--ink),.2)}
+/* [/6] */
+
+/* [7 모서리] */
+:root{--r-sm:4px;--r-md:6px;--r-lg:8px}
+.btn{border-radius:var(--r-md)}
+.menu-card{border-radius:var(--r-lg)}
+.menu-card img{border-radius:var(--r-sm)}
+.map{border-radius:var(--r-lg)}
+/* [/7] */
+
+/* [8 간격] */
+.hero-actions{gap:8px}
+.menu-grid{gap:12px}
+.menu-card{gap:6px}
+.info{gap:32px}
+/* [/8] */
+
+/* [9 움직임] */
+:root{--ease-out:cubic-bezier(0,0,.2,1);--ease-expo:cubic-bezier(.16,1,.3,1)}
+.btn{transition:background-color 160ms var(--ease-out),transform 160ms var(--ease-out)}
+.btn:hover{transform:translateY(-1px)}
+.menu-card{transition:transform 480ms var(--ease-expo)}
+.menu-card:hover{transform:translateY(-2px)}
+@media (prefers-reduced-motion:reduce){.btn,.menu-card{transition:none}}
+/* [/9] */
+
+/* [10 폭] */
+.container{max-width:1244px}
+.hero p,.section p{max-width:36em}
+/* [/10] */
+</style>
+<link rel="stylesheet" href="../minimal.css">
+</head>
+<body>
+<div class="container">
+<header>
+  <a class="logo" href="#">오후세시 커피</a>
+  <a class="btn btn-ghost" href="#visit">예약하기</a>
+</header>
+
+<section class="hero" id="hero">
+  <span class="label">SINCE 2019 · MANGWON</span>
+  <h1>오후 세 시, 햇빛이 테이블 끝까지 들어오는 곳</h1>
+  <p>망원동 골목 끝 작은 로스터리입니다. 화요일과 금요일에 원두를 볶고, 볶은 지 사흘 지난 원두만 씁니다.</p>
+  <div class="hero-actions">
+    <a class="btn btn-primary" href="#menu">메뉴 보기</a>
+    <a class="btn btn-ghost" href="#visit">오시는 길</a>
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>우리의 이야기</h2>
+  <p>오후세시 커피는 2019년 망원동 골목에서 작은 로스터리로 시작했습니다. 매주 화요일과 금요일에 소량으로 원두를 볶고, 볶은 지 사흘이 지난 원두만 에스프레소에 씁니다. 창가 자리 여섯 개와 긴 원목 테이블 하나가 전부인 작은 가게지만, 오후 세 시가 되면 햇빛이 테이블 끝까지 들어옵니다.</p>
+  <p>창가 자리는 예약 없이 먼저 오시는 순서대로 앉으실 수 있습니다.</p>
+</section>
+
+<section class="section" id="menu">
+  <h2>시그니처 메뉴</h2>
+  <div class="menu-grid">
+    <article class="menu-card">
+      <img src="../../images/menu-1.jpg" alt="우유 크림을 얹은 아이스 라떼">
+      <h3>오후세시 라떼</h3>
+      <p>고소한 원두에 우유 크림을 얹은 가게 대표 메뉴입니다.</p>
+      <span class="price">6,000원</span>
+      <span class="meta">매일 한정 40잔</span>
+    </article>
+    <article class="menu-card">
+      <img src="../../images/menu-2.jpg" alt="드리퍼로 내리는 핸드드립 커피">
+      <h3>오늘의 핸드드립</h3>
+      <p>그날 볶은 원두 중 하나를 골라 천천히 내려 드립니다.</p>
+      <span class="price">7,000원</span>
+      <span class="meta">원두 3종 중 선택</span>
+    </article>
+    <article class="menu-card">
+      <img src="../../images/menu-3.jpg" alt="무화과를 넣은 휘낭시에">
+      <h3>무화과 휘낭시에</h3>
+      <p>버터 향이 진한 구움과자에 무화과 조림을 넣었습니다.</p>
+      <span class="price">3,800원</span>
+      <span class="meta">오후 2시에 오븐에서 나옵니다</span>
+    </article>
+  </div>
+</section>
+
+<section class="section" id="visit">
+  <h2>오시는 길</h2>
+  <div class="info">
+    <div class="map">지도 영역</div>
+    <div>
+      <h3>서울 마포구 망원동 가상로 3길 15</h3>
+      <p class="meta">영업 11:00–22:00 · 월요일 휴무</p>
+      <p>망원역 2번 출구에서 걸어서 8분. 골목 끝 초록 차양이 보이면 도착입니다.</p>
+      <a class="btn btn-primary" href="#">예약하기</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>© 2026 오후세시 커피. All rights reserved.</p>
+  <p>이 페이지는 전자책 실습용 가상 가게입니다.</p>
+</footer>
+</div>
+</body>
+</html>

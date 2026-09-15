@@ -1,0 +1,4 @@
+/* 에디토리얼 — 웨딩·브랜드 스토리·출판. 세리프 제목 + 종이색 */
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@500;700&display=swap");
+:root{--bg:#F4F1EA;--surface:#F8F6F1;--ink:38,32,26;--on-ink:#F4F1EA;--r-sm:2px;--r-md:2px;--r-lg:2px;--font-display:"Noto Serif KR",serif}
+h1,h2{font-weight:700}
