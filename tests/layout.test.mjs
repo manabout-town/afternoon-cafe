@@ -4,7 +4,7 @@ import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { chromium, openPage, ROOT } from './_helpers.mjs';
 
-export const PAGES = ['before/index.html'];
+export const PAGES = ['before/index.html', 'after/index.html'];
 let browser;
 before(async () => { browser = await chromium.launch(); });
 after(async () => { await browser.close(); });
