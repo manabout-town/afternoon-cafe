@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>오후세시 커피 — AI가 만든 티 벗기기</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#F6F5F2;font-family:"Pretendard Variable",Pretendard,-apple-system,sans-serif;font-size:14px;line-height:1.6;letter-spacing:-0.011em;color:rgba(26,24,20,.92)}
+.container{max-width:1244px;margin:0 auto;padding:0 24px}
+header{padding:72px 0 40px}
+h1{font-size:clamp(28px,4vw,36px);line-height:1.2;letter-spacing:-0.025em;margin:0 0 12px;font-weight:700}
+header p{max-width:36em;color:rgba(26,24,20,.68);margin:0}
+main{padding-bottom:72px}
+ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+li{background:#FBFAF8;border-radius:8px;padding:16px}
+a{color:rgba(26,24,20,.92);text-decoration:none;font-weight:600;transition:color 160ms cubic-bezier(0,0,.2,1)}
+a:hover{color:rgba(26,24,20,.68)}
+.desc{display:block;margin-top:6px;font-size:12px;color:rgba(26,24,20,.45)}
+footer{padding:24px 0 48px;color:rgba(26,24,20,.45);font-size:12px}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>오후세시 커피 — AI가 만든 티 벗기기</h1>
+<p>가상 카페 예제로 AI가 만든 화면의 흔한 실수 10가지를 고쳐 보는 실습 자료 모음입니다.</p>
+</header>
+<main>
+<ul>
+<li><a href="before/">고치기 전</a><span class="desc">10가지 실수가 그대로 있는 원본 페이지</span></li>
+<li><a href="after/">완성본</a><span class="desc">10가지를 전부 고친 최종 페이지</span></li>
+<li><a href="quickstart/">퀵스타트</a><span class="desc">첫 10분, 12줄로 핵심만 적용한 버전</span></li>
+<li><a href="steps/01-background/">Step 1 배경</a><span class="desc">순백 배경을 라이트 톤으로</span></li>
+<li><a href="steps/02-body-size/">Step 2 글자 크기</a><span class="desc">본문 14px, 입력칸만 16px</span></li>
+<li><a href="steps/03-line-height/">Step 3 줄 간격</a><span class="desc">제목·본문 줄 간격 분리</span></li>
+<li><a href="steps/04-letter-spacing/">Step 4 자간</a><span class="desc">제목·본문 자간 분리</span></li>
+<li><a href="steps/05-font/">Step 5 폰트</a><span class="desc">Pretendard · IBM Plex Mono 적용</span></li>
+<li><a href="steps/06-text-color/">Step 6 글자색</a><span class="desc">먹색 투명도 4단계로 통일</span></li>
+<li><a href="steps/07-radius/">Step 7 모서리</a><span class="desc">모서리 반경을 한 계열로</span></li>
+<li><a href="steps/08-gap/">Step 8 간격</a><span class="desc">gap 일괄값을 요소별로 분리</span></li>
+<li><a href="steps/09-motion/">Step 9 움직임</a><span class="desc">transition을 의도된 값으로</span></li>
+<li><a href="steps/10-reading-width/">Step 10 폭</a><span class="desc">전체 폭과 문단 폭 조정</span></li>
+<li><a href="styles/minimal/">스타일 · 미니멀</a><span class="desc">여백 넓은 절제된 스타일 세트</span></li>
+<li><a href="styles/editorial/">스타일 · 에디토리얼</a><span class="desc">세리프 잡지 지면 스타일 세트</span></li>
+<li><a href="styles/dark/">스타일 · 다크</a><span class="desc">어두운 배경 포인트 컬러 스타일 세트</span></li>
+<li><a href="styles/soft/">스타일 · 소프트</a><span class="desc">둥근 모서리 부드러운 스타일 세트</span></li>
+<li><a href="tailwind/after.html">Tailwind 변환판</a><span class="desc">완성본을 Tailwind 클래스로 옮긴 버전</span></li>
+<li><a href="tools/ai-slop-check.js">AI 티 검사기</a><span class="desc">10개 규칙을 자동으로 점수화하는 스크립트</span></li>
+<li><a href="rules/CLAUDE.md">AI 규칙 · Claude Code</a><span class="desc">CLAUDE.md 형식의 화면 작업 규칙</span></li>
+<li><a href="prompts.md">지시문 모음</a><span class="desc">한 번에 고치기 · 장별 지시문 프롬프트</span></li>
+</ul>
+</main>
+<footer>이 저장소는 전자책 실습용 예제입니다. 가게 이름·주소는 모두 가상입니다.</footer>
+</div>
+</body>
+</html>
