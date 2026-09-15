@@ -59,7 +59,14 @@
     add('line-height', '큰 제목 줄 간격', worst === null || worst <= 1.25,
       worst === null ? '큰 제목 없음' : `최대 ${worst.toFixed(2)}배`, '큰 제목 1.05~1.2배');
 
-    const ems = display.map(t => t.letterSpacing === 'normal' ? 0 : parseFloat(t.letterSpacing) / t.fontSize);
+    // 크롬 computed letterSpacing은 px('-1.96px')뿐 아니라 %('-3%', -0.03em 의미)로도 온다.
+    const toEm = (v, fontSize) => {
+      if (v === 'normal') return 0;
+      if (v.endsWith('%')) return parseFloat(v) / 100;
+      if (v.endsWith('em')) return parseFloat(v);
+      return parseFloat(v) / fontSize; // px
+    };
+    const ems = display.map(t => toEm(t.letterSpacing, t.fontSize));
     add('letter-spacing', '큰 제목 자간', ems.every(v => v <= -0.01 && v >= -0.05),
       ems.length ? `${Math.max(...ems).toFixed(3)} ~ ${Math.min(...ems).toFixed(3)}em` : '큰 제목 없음',
       '큰 제목 -0.02 ~ -0.04em');

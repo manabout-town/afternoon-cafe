@@ -56,6 +56,13 @@ test('큰 제목 자간: normal·과도한 음수 실패', () => {
   assert.deepEqual(failed(s2), ['letter-spacing']);
 });
 
+test('큰 제목 자간: 퍼센트 문자열(크롬 계산값)도 올바르게 em 환산', () => {
+  const s = good(); s.texts[0] = { ...s.texts[0], fontSize: 59, letterSpacing: '-3%' };
+  assert.deepEqual(failed(s), []); // -3% = -0.03em → 통과
+  const s2 = good(); s2.texts[0] = { ...s2.texts[0], fontSize: 59, letterSpacing: '-8%' };
+  assert.deepEqual(failed(s2), ['letter-spacing']); // -8% = -0.08em → 실패
+});
+
 test('폰트: 시스템 폰트 스택 실패', () => {
   const s = good(); s.texts = s.texts.map(t => ({ ...t, fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif' }));
   assert.deepEqual(failed(s), ['font']);

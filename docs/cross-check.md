@@ -157,14 +157,15 @@ node --test "tests/*.test.mjs"
 | https://harryjatkins.com | 9/10 | background(rgb(255, 255, 255)) |
 | https://augen.pro | 6/10 | body-size(16px), letter-spacing(0.008 ~ -0.020em), radius(중간 + 소프트 + 타이트), motion(기본 ease 22/22곳 (100%)) |
 | https://shopify.design | 측정 실패 | page.goto: Timeout 45000ms exceeded. |
-| https://interfere.com | 5/10 | background(rgb(255, 255, 255)), line-height(최대 1.29배), letter-spacing(-0.010 ~ -0.051em), radius(타이트 + 소프트 + 중간), reading-width(가장 넓은 문단 1054px) |
+| https://interfere.com | 6/10 | background(rgb(255, 255, 255)), line-height(최대 1.29배), radius(타이트 + 소프트 + 중간), reading-width(가장 넓은 문단 1054px) |
 | https://becaneparis.com | 7/10 | body-size(8px), letter-spacing(0.000 ~ 0.000em), motion(기본 ease 2/2곳 (100%)) |
 | https://dirtverse.co | 6/10 | background(rgb(255, 255, 255)), body-size(20px), letter-spacing(0.000 ~ 0.000em), radius(타이트 + 중간) |
 | https://podium.global | 7/10 | background(rgb(0, 0, 0)), body-size(16px), letter-spacing(0.000 ~ 0.000em) |
 
 **요약**: 측정 성공 8곳 — 9점 3곳(linear, oriorai, harryjatkins), 7점 2곳(becaneparis,
-podium), 6점 2곳(augen, dirtverse), 5점 1곳(interfere). 10점은 없다. shopify.design은 세
-차례 모두 45초 안에 열리지 않아 제외. 앞의 4곳은 2차와 점수·걸린 항목이 같다.
+podium), 6점 3곳(augen, dirtverse, interfere). 10점은 없다. shopify.design은 세
+차례 모두 45초 안에 열리지 않아 제외. 앞의 4곳(linear·oriorai·harryjatkins·augen)은 2차와
+점수·걸린 항목이 같다.
 
 ### 새로 넣은 4곳 판정 (2026-09-15 측정값, 추측 없음)
 
@@ -174,10 +175,12 @@ podium), 6점 2곳(augen, dirtverse), 5점 1곳(interfere). 10점은 없다. sho
   `oklch(0.15 0 0)`였는데, 이번에는 `<body>`·`<html>` 배경이 모두 `rgb(255,255,255)`로 나왔다.
 - **interfere.com / line-height(1.29배)** — 사이트가 규칙과 다름 → 유지. 28px 소제목이
   `line-height: 36px`(1.29배). 56~59px 큰 제목은 1.0배로 통과 범위.
-- **interfere.com / letter-spacing(-0.051em)** — **검사기 한계(원인 확인)** → 이번 판에서는 수정 안 함.
-  Chrome이 이 사이트의 큰 제목 자간을 `-2%`, `-3%`처럼 퍼센트로 돌려주는데, 검사기는
-  `parseFloat`로 숫자만 떼어 px로 계산한다. `-3% ÷ 59px`가 `-0.051em`으로 잡혀 범위를 벗어났지만,
-  실제 값은 `-0.03em`으로 권장 범위 안이다. 퍼센트 자간 처리는 다음 개정 후보로 남긴다.
+- **interfere.com / letter-spacing** — **검사기 버그, 2026-09-15에 수정** → 이번 판에서는
+  통과로 바뀌었다. Chrome이 이 사이트의 큰 제목 자간을 `-2%`, `-3%`처럼 퍼센트로 돌려주는데,
+  검사기가 `parseFloat`로 숫자만 떼어 px로 나눠 `-3% ÷ 59px = -0.051em`으로 잘못 계산해
+  범위를 벗어났었다. `letterSpacing`이 `%`로 끝나면 `parseFloat/100`(em)로, `em`으로 끝나면
+  그대로, 그 외(px)만 기존처럼 폰트 크기로 나누도록 고쳤다. 실제 값은 `-0.03em`으로 원래도
+  권장 범위 안이었다 — false fail이었다.
 - **interfere.com / radius(3계열)** — linear.app과 같은 사유(측정 범위) → 유지. 타이트 218개,
   소프트 14개, 중간 14개.
 - **interfere.com / reading-width(1054px)** — 사이트가 규칙과 다름 → 유지. 가장 넓은 문단은
@@ -215,14 +218,46 @@ podium), 6점 2곳(augen, dirtverse), 5점 1곳(interfere). 10점은 없다. sho
 - **완화한 규칙**: text-color(알파 무시 + 그룹핑 + 3% 임계값), motion(비율 기준 25%,
   `all` 조건 삭제). 두 규칙 모두 실측 근거로 RED→GREEN 확인 후 `tools/ai-slop-check.js`에
   반영, 기존 61개 테스트를 포함한 전체 스위트 그린 유지.
-- **유지한 규칙**: background, body-size, letter-spacing, radius. 실패 항목 전부 측정값을
+- **유지한 규칙**: background, body-size, radius. 실패 항목 전부 측정값을
   직접 인용해 판정했으며, 추측성 서술("서드파티 위젯이라서", "사이트 개편일 것이다")은
   전부 "원인 미확인"으로 정정했다.
+- **고친 규칙(fix round 2)**: letter-spacing — 퍼센트 문자열(`-3%`)을 px처럼 나눠 계산하던
+  버그를 수정. interfere.com이 4차 재측정에서 5/10 → 6/10으로 바뀌었다.
 - **책에 쓸 수 있는 한계 두 가지**: (1) augen.pro는 여전히 진짜 아웃라이어 —
   본문 16px·모션 22/22 기본 ease·140px 히어로 양수 자간까지, 규칙을 완화해도 걸리는
   사이트가 있다는 걸 보여주는 좋은 예. (2) 베이스라인(2026-08)과 이번 재측정(2026-09)
   사이에 oriorai.com·augen.pro의 본문 크기가 14px→16px로 달라졌다 — 라이브 사이트는
   계속 바뀌므로 "실측"도 유통기한이 있다는 한계로 밝힌다.
 - **3차(대상 확장)**: 기준값은 그대로 두고 8곳을 쟀다. 새로 걸린 항목은 대부분 사이트 쪽 선택이거나
-  2026-08 이후 달라진 값이다. 검사기 쪽 문제로 확인된 것은 퍼센트 자간(interfere.com) 1건이며, 이번 판에서는
-  기록만 하고 고치지 않았다.
+  2026-08 이후 달라진 값이다. 검사기 쪽 문제로 확인된 것은 퍼센트 자간(interfere.com) 1건이었다.
+
+## 2026-09-15 규칙 수정 (fix round 2): 퍼센트 자간 버그 수정
+
+3차에서 "검사기 한계"로만 기록해뒀던 퍼센트 자간 버그를 이번에 고쳤다. `tests/analyze.test.mjs`에
+`letterSpacing: '-3%'`(59px 제목 → 통과 기대)와 `'-8%'`(→ 실패 기대) 케이스를 먼저 추가해 RED
+확인 후, `tools/ai-slop-check.js`의 letter-spacing 계산을 `letterSpacing`이 `%`로 끝나면
+`parseFloat(v)/100`(em), `em`으로 끝나면 `parseFloat(v)` 그대로, 그 외(px)만 기존처럼
+`parseFloat(v)/fontSize`로 나누도록 고쳤다. `node --test tests/analyze.test.mjs` GREEN,
+`node scripts/build.mjs && node --test "tests/*.test.mjs"` 65/65 GREEN.
+
+`scripts/cross-check.mjs`를 9곳 그대로 재실행한 결과, interfere.com만 달라졌다(letter-spacing
+실패가 사라짐) — 나머지 8곳은 3차와 점수·걸린 항목이 동일하다.
+
+## 4차 결과 (2026-09-15, 퍼센트 자간 버그 수정 후)
+
+| 사이트 | 점수 | 걸린 항목 |
+|---|---|---|
+| https://linear.app | 9/10 | radius(타이트 + 소프트 + 중간) |
+| https://oriorai.com | 9/10 | body-size(16px) |
+| https://harryjatkins.com | 9/10 | background(rgb(255, 255, 255)) |
+| https://augen.pro | 6/10 | body-size(16px), letter-spacing(0.008 ~ -0.020em), radius(중간 + 소프트 + 타이트), motion(기본 ease 22/22곳 (100%)) |
+| https://shopify.design | 측정 실패 | page.goto: Timeout 45000ms exceeded. |
+| https://interfere.com | 6/10 | background(rgb(255, 255, 255)), line-height(최대 1.29배), radius(타이트 + 소프트 + 중간), reading-width(가장 넓은 문단 1054px) |
+| https://becaneparis.com | 7/10 | body-size(8px), letter-spacing(0.000 ~ 0.000em), motion(기본 ease 2/2곳 (100%)) |
+| https://dirtverse.co | 6/10 | background(rgb(255, 255, 255)), body-size(20px), letter-spacing(0.000 ~ 0.000em), radius(타이트 + 중간) |
+| https://podium.global | 7/10 | background(rgb(0, 0, 0)), body-size(16px), letter-spacing(0.000 ~ 0.000em) |
+
+**최종 요약**: 측정 성공 8곳 — 9점 3곳(linear, oriorai, harryjatkins), 7점 2곳(becaneparis,
+podium), 6점 3곳(augen, dirtverse, interfere). 10점은 없다. shopify.design은 네 차례 모두
+45초 안에 열리지 않아 제외. interfere.com은 버그 수정으로 5/10 → 6/10이 됐고, 나머지 7곳은
+변화 없다.
